@@ -43,7 +43,7 @@ class HoneyBadgerBFTNode (HoneyBadgerBFT):
         self.mode = mode
         self.running = bft_running
         
-        HoneyBadgerBFT.__init__(self, sid, id, B, N, f, self.sPK, self.sSK, self.ePK, self.eSK, send=self.send, recv=self.recv, K=K, mute=mute)
+        HoneyBadgerBFT.__init__(self, sid, id, max(int(B/N), 1), N, f, self.sPK, self.sSK, self.ePK, self.eSK, send=self.send, recv=self.recv, K=K, mute=mute)
         self._prepare_bootstrap()
         # self.server = Node(id=id, ip=my_address, port=addresses_list[id][1], addresses_list=addresses_list, logger=self.logger)
         
