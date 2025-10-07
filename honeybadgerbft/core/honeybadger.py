@@ -152,9 +152,9 @@ class HoneyBadgerBFT():
                     self._per_round_recv[r].put_nowait((sender, msg))
                 except:
                     continue
-        print(111)
+        
         self._recv_thread = gevent.spawn(_recv)
-        print(222)
+        
         self.s_time = time.time()
         if self.logger != None: self.logger.info('Node %d starts to run at time:' % self.id + str(self.s_time))
 
@@ -184,13 +184,13 @@ class HoneyBadgerBFT():
                     self._send(j, (r, o))
                 return _send
 
-            print(333)
+            #print(333)
             send_r = _make_send(r)
-            print(444)
+            #print(444)
             recv_r = self._per_round_recv[r].get
-            print(555)
+            #print(555)
             new_tx = self._run_round(r, tx_to_send, send_r, recv_r)
-            print(new_tx)
+            #print(new_tx)
             #print('new block at %d:' % self.id, new_tx)
             if self.logger != None:
                 #self.logger.info('Node %d Delivers Block %d: ' % (self.id, self.round) + str(new_tx))

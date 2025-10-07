@@ -11,18 +11,18 @@ from multiprocessing import Value as mpValue, Queue as mpQueue, Process
 from typing import  Callable
 import logging
 
-def load_key(id):
+def load_key(N, id):
 
-    with open(os.getcwd() + '/keys/' + 'sPK.key', 'rb') as fp:
+    with open(os.getcwd() + '/keys-' + str(N) + '/' + 'sPK.key', 'rb') as fp:
         sPK = pickle.load(fp)
 
-    with open(os.getcwd() + '/keys/' + 'ePK.key', 'rb') as fp:
+    with open(os.getcwd() + '/keys-' + str(N) + '/' + 'ePK.key', 'rb') as fp:
         ePK = pickle.load(fp)
 
-    with open(os.getcwd() + '/keys/' + 'sSK-' + str(id) + '.key', 'rb') as fp:
+    with open(os.getcwd() + '/keys-' + str(N) + '/' + 'sSK-' + str(id) + '.key', 'rb') as fp:
         sSK = pickle.load(fp)
 
-    with open(os.getcwd() + '/keys/' + 'eSK-' + str(id) + '.key', 'rb') as fp:
+    with open(os.getcwd() + '/keys-' + str(N) + '/' + 'eSK-' + str(id) + '.key', 'rb') as fp:
         eSK = pickle.load(fp)
 
     return sPK, ePK, sSK, eSK
@@ -31,7 +31,7 @@ def load_key(id):
 class HoneyBadgerBFTNode (HoneyBadgerBFT):
 
     def __init__(self, sid, id, B, N, f, bft_from_server: Callable, bft_to_client: Callable, ready: mpValue, stop: mpValue, K=3, mode='debug', mute=False, debug=False, bft_running: mpValue=mpValue(c_bool, False), tx_buffer=None):
-        self.sPK, self.ePK, self.sSK, self.eSK = load_key(id)
+        self.sPK, self.ePK, self.sSK, self.eSK = load_key(N, id)
         self.B = B
         self.K = K
         self.bft_from_server = bft_from_server
@@ -43,7 +43,7 @@ class HoneyBadgerBFTNode (HoneyBadgerBFT):
         self.mode = mode
         self.running = bft_running
         
-        HoneyBadgerBFT.__init__(self, sid, id, B, N, f, self.sPK, self.sSK, self.ePK, self.eSK, send=self.send, recv=self.recv, K=K, mute=mute)
+        HoneyBadgerBFT.__init__(self, sid, id, max(int(B/N), 1), N, f, self.sPK, self.sSK, self.ePK, self.eSK, send=self.send, recv=self.recv, K=K, mute=mute)
         self._prepare_bootstrap()
         # self.server = Node(id=id, ip=my_address, port=addresses_list[id][1], addresses_list=addresses_list, logger=self.logger)
         
