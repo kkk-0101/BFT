@@ -36,7 +36,7 @@ So this codebase also includes a PoC implementation for Dumbo-2 as a by-product.
     cd ..
     
     python3 -m pip install --upgrade pip
-    sudo pip3 install gevent setuptools gevent numpy ecdsa pysocks gmpy2 zfec gipc pycrypto coincurve
+    sudo pip3 install gevent setuptools gevent numpy ecdsa pysocks gmpy2==2.1.2 zfec==1.5.7.4 gipc pycrypto==2.6.1 coincurve
     ```
 
 2. A quick start to run Dumbo-2 for 20 epochs with a batch size of 1000 tx can be:
