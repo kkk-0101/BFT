@@ -174,7 +174,7 @@ class HoneyBadgerBFT():
             tx_to_send = []
             for _ in range(self.B):
                 tx_to_send.append(self.transaction_buffer.popleft())
-            print(len(tx_to_send))
+            # print(len(tx_to_send))
 
             # TODO: Wait a bit if transaction buffer is not full
 
